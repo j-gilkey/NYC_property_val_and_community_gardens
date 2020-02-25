@@ -51,22 +51,17 @@ TABLES['manhattan_PLUTO'] = ("""
 TABLES['manhattan_sales'] = ("""
      CREATE TABLE manhattan_sales (
       sale_id INT NOT NULL AUTO_INCREMENT,
+      neighborhood varchar(50),
       block varchar(22) NOT NULL,
       lot varchar(22),
-      neighborhood varchar(50),
-      building_class_category varchar(50),
-      building_class varchar(50),
       address varchar(50),
-      apt_number varchar(50),
-      res_units varchar(50),
-      comm_units int(22),
-      land_sq_feet int(22),
-      gross_sq_feet int(22),
-      year_built int(22),
+      sale_price int,
       sale_date varchar(50),
-      sale_price decimal(10,8),
+      apt_number varchar(22),
+      unit_type varchar(22),
       PRIMARY KEY (sale_id)
     ) ENGINE=InnoDB""")
+
 
 
 #table creation function accepts a list and exectutes each element

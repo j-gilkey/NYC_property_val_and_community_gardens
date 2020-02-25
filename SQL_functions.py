@@ -28,12 +28,17 @@ def insert_PLUTO_lot(tuples):
     cursor.execute(add_row, tuples)
     cnx.commit()
 
+def get_PLUTO():
+    get_data = ('(SELECT *  FROM manhattan_PLUTO)')
+    cursor.execute(get_data)
+    return cursor.fetchall()
+
 
 def insert_sale(tuples):
 
     add_row = ("""INSERT INTO manhattan_sales
-               (block, lot, neighborhood, building_class_category, building_class, address, apt_number, res_units, comm_units, land_sq_feet, gross_sq_feet, year_built, sale_date, sale_price)
-               VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);""")
+               (neighborhood, block, lot, address, sale_price, sale_date, apt_number, unit_type)
+               VALUES (%s, %s, %s, %s, %s, %s, %s, %s);""")
 
     cursor.executemany(add_row, tuples)
     cnx.commit()
