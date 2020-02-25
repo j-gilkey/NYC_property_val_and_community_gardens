@@ -31,7 +31,6 @@ TABLES['manhattan_PLUTO'] = ("""
       splitzone varchar(50),
       bldgclass varchar(50),
       landuse varchar(50),
-      ownertype varchar(50),
       ownername varchar(50),
       lotarea int(22),
       lottype int(22),
@@ -44,7 +43,6 @@ TABLES['manhattan_PLUTO'] = ("""
       landmark varchar(50),
       builtfar decimal(10,8),
       residfar decimal(10,8),
-      how_many int(22),
       lat decimal(10,8),
       lng decimal(10,8),
       PRIMARY KEY (lot_id)

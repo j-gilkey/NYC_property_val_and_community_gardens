@@ -20,12 +20,12 @@ cursor = cnx.cursor()
 def insert_PLUTO_lot(tuples):
 
     add_row = ("""INSERT INTO manhattan_PLUTO
-               (block, lot, cd, zipcode, address, zonedist1, schooldist, splitzone, bldgclass, landuse, ownertype, ownername, lotarea
-               lottype, numfloors, unitsres, yearbuilt, yearalter1, yearalter2, histdist, landmark, builtfar, residfar, how_many, lat, lng)
-               VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s,
-               %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);""")
+               (block, lot, cd, zipcode, address, zonedist1, schooldist, splitzone, bldgclass, landuse, ownername, lotarea,
+               lottype, numfloors, unitsres, yearbuilt, yearalter1, yearalter2, histdist, landmark, builtfar, residfar, lat, lng)
+               VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s,
+               %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);""")
 
-    cursor.executemany(add_row, tuples)
+    cursor.execute(add_row, tuples)
     cnx.commit()
 
 
