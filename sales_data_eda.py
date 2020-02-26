@@ -27,6 +27,23 @@ def classify_type(row):
     else:
         return 'apartment'
 
+def get_sale_amount(row):
+    sale_amount =  row['SALE PRICE']
+    #print(sale_amount)
+    sale_amount = sale_amount.strip()
+    sale_amount = sale_amount.strip('$\\t')
+    sale_amount = sale_amount.replace(',', '')
+    sale_amount = sale_amount.replace('-', '0')
+    #print(sale_amount)
+    sale_amount = int(float(sale_amount))
+
+    return sale_amount
+
+def get_year(row):
+    date =  row['SALE DATE']
+    year = '20' + date[-2:]
+
+    return year
 
 
 def clean_sales_data(df):
@@ -39,32 +56,54 @@ def clean_sales_data(df):
     df = df.loc[:, columns_to_keep]
     #prune down to only the columns we are interested in
 
-    df['SALE PRICE'] = df.apply(lambda row: int(row['SALE PRICE'].strip('$').replace(',', '')), axis = 1)
+    df['SALE PRICE'] = df.apply(lambda row: get_sale_amount(row), axis = 1)
     #remove dollar sign and comma characters from price before converting it to an int
 
     df['apt_number'] = df.apply(lambda row: get_apt_number(row), axis = 1)
-    df['ADDRESS'] = df.apply(lambda row: get_address(row), axis = 1)
+    df['ADDRESS'] = df.apply(lambda row: get_address(row).rstrip(), axis = 1)
     #split out address and apartment apt_number
 
+    df['NEIGHBORHOOD'] = df.apply(lambda row: row['NEIGHBORHOOD'].rstrip(), axis = 1)\
+    #strip trailing whitespace off neighborhood
+
     df['unit_type'] = df.apply(lambda row: classify_type(row), axis = 1)
+    #then use that to classify whether or not a particular sale was of a whole building
+
+    df['year'] = df.apply(lambda row: get_year(row), axis = 1)
     #then use that to classify whether or not a particular sale was of a whole building
 
     df = df.dropna()
     #drop rows with missing values
 
-    df = df[df['SALE PRICE']!='0']
+    df = df[df['SALE PRICE']>0]
     #remove any sale where no money was exchanged
 
     return df
 
-# sales_2019_df = pd.read_csv('data/rollingsales_manhattan_1.csv' )
-#
-# sales_2019_df = clean_sales_data(sales_2019_df)
-# print(sales_2019_df.head)
 
-sales_2018_df = pd.read_csv('data/2018_manhattan.csv')
 
-sales_2018_df = clean_sales_data(sales_2018_df)
-print(sales_2018_df.head)
+def make_tuples(df):
 
-print(sales_2018_df.dtypes)
+    tuples = list(df.itertuples(index=False, name=None))
+    return tuples
+
+def sales_wrapper():
+    years = range(2009,2019)
+
+    for year in years:
+
+        sales_df = pd.read_csv('data/' +str(year)+ '_manhattan.csv')
+
+        #print(sales_df.dtypes)
+
+        sales_df = clean_sales_data(sales_df)
+
+        tuples = make_tuples(sales_df)
+
+        print(tuples[0])
+
+        SQL_functions.insert_sale(tuples)
+
+    #print(tuples[0])
+
+sales_wrapper()

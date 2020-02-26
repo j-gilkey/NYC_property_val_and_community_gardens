@@ -37,8 +37,8 @@ def get_PLUTO():
 def insert_sale(tuples):
 
     add_row = ("""INSERT INTO manhattan_sales
-               (neighborhood, block, lot, address, sale_price, sale_date, apt_number, unit_type)
-               VALUES (%s, %s, %s, %s, %s, %s, %s, %s);""")
+               (neighborhood, block, lot, address, sale_price, sale_date, apt_number, unit_type, year)
+               VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s);""")
 
     cursor.executemany(add_row, tuples)
     cnx.commit()

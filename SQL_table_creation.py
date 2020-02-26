@@ -59,6 +59,7 @@ TABLES['manhattan_sales'] = ("""
       sale_date varchar(50),
       apt_number varchar(22),
       unit_type varchar(22),
+      year varchar(22),
       PRIMARY KEY (sale_id)
     ) ENGINE=InnoDB""")
 
