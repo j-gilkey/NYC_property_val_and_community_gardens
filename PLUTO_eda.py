@@ -3,11 +3,13 @@ import seaborn as sns
 import numpy as np
 import matplotlib.pyplot as plt
 
-df = pd.read_csv('pluto_20v1.csv' )
+df = pd.read_csv('data/pluto_20v1.csv' )
 
-#garden_df = pd.read_csv('garden_df.csv' )
+print(df.shape)
 
-#manhattan_df = pd.read_csv('man_df.csv' )
+#garden_df = pd.read_csv('data/garden_df.csv' )
+
+#manhattan_df = pd.read_csv('data/man_df.csv' )
 
 def count_plot(df,to_count):
     #a count plot to show the class distribution within the dataset
@@ -19,4 +21,4 @@ def count_plot(df,to_count):
     #ax.set_xlabel('Cuisine')
     plt.show()
 
-count_plot(df,'borough')
+#count_plot(df,'borough')

@@ -42,3 +42,8 @@ def insert_sale(tuples):
 
     cursor.executemany(add_row, tuples)
     cnx.commit()
+
+def get_sales():
+    get_data = ('(SELECT *  FROM manhattan_sales)')
+    cursor.execute(get_data)
+    return cursor.fetchall()
