@@ -114,13 +114,14 @@ def sales_eda_wrapper():
     df_units = garden_locator.find_nearby_gardens(df_units)
     #print(df_units.shape)
     #df_units = df_units[df_units['sale_price'] < 3000000]
+    df_units['log_price'] = df_units.apply(lambda row: np.log(row['sale_price']), axis =1)
     #df_buildings = df[df['unit_type'] == 'whole_building']
     #df_buildings = df_buildings[df_buildings['sale_price'] < 14000000]
     #df_2009_units = df_units[df_units['year'] == '2009']
     #df_2013_units = df_units[df_units['year'] == '2013']
     #df_2018_units = df_units[df_units['year'] == '2018']
 
-    #hist_plot(df_units, 'distance_to_garden')
+    #hist_plot(df_units, 'log_price')
 
     #scatter_plot('lat', 'lng', df_units)
     #joint_plot('lat', 'lng', df_2018_units)
@@ -132,4 +133,4 @@ def sales_eda_wrapper():
     return df_units
 
 
-sales_eda_wrapper()
+#sales_eda_wrapper()
