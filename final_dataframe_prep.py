@@ -64,5 +64,19 @@ def get_train_test_split(df, y_column_name):
     x_y_dict ={'X_train' : X_train, 'X_test' : X_test, 'y_train': y_train, 'y_test' : y_test}
     return(X_train, X_test,y_train,y_test)
 
+def heat_corr(df):
+    fig = plt.figure()
+    #plt.clear()
+    plt.style.use('seaborn')
+    sns.set_palette('colorblind')
+    corr = df.corr()
+    sns.set(rc={'figure.figsize':(11.7,8.27)})
+    ax = sns.heatmap(corr, xticklabels=corr.columns, yticklabels=corr.columns, annot=True)
+    #ax.set_title(name)
+    bottom, top = ax.get_ylim()
+    ax.set_ylim(bottom + 0.5, top - 0.5)
+    plt.show()
+
 #df = model_prep()
+#heat_corr(df)
 #df.to_csv('data/prepped_for_model_logged_price.csv', index=False)

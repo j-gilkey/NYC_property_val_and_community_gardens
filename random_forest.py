@@ -6,7 +6,7 @@ from sklearn.neighbors import NearestNeighbors
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import confusion_matrix
 import final_dataframe_prep
-from sklearn.metrics import mean_squared_error
+from sklearn.metrics import mean_squared_error, mean_absolute_error
 
 pd.set_option('display.max_columns', None)
 
@@ -35,7 +35,8 @@ def random_forest(X_train, X_test, y_train, y_test, max_depth = 5, n_estimators 
     clasPred = forest.predict(X_test)
     #print(clasPred)
     #print(accuracy_score(y_test, clasPred))
-    print(mean_squared_error(y_test, clasPred, squared=False))
+    #print(mean_squared_error(y_test, clasPred, squared=False))
+    print(mean_absolute_error(y_test, clasPred))
 
     #plot_feature_importances(forest, X_train)
 
