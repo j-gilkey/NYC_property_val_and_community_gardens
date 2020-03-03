@@ -6,6 +6,7 @@ from sklearn.neighbors import NearestNeighbors
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import confusion_matrix
 import final_dataframe_prep
+import grid_search
 from sklearn.metrics import mean_squared_error, mean_absolute_error
 
 pd.set_option('display.max_columns', None)
@@ -40,5 +41,25 @@ def random_forest(X_train, X_test, y_train, y_test, max_depth = 5, n_estimators 
 
     #plot_feature_importances(forest, X_train)
 
+    return forest
+
+def grid_search_forest(X_train, X_test, y_train, y_test, max_depth = 5, n_estimators = 100):
+    forest = RandomForestRegressor(n_estimators=n_estimators, max_depth= max_depth, max_features = 2)
+
+    param_grid = {
+        'max_features':[2,10],
+        'max_depth': [2,5],
+        'n_estimators': [20,100]
+    }
+
+    grid_search.grid_search(forest, param_grid, X_train, X_test, y_train, y_test, scoring = 'neg_mean_absolute_error')
+
+
+#print(sorted(sklearn.metrics.SCORERS.keys()))
+
+
+#grid_search_forest(X_train, X_test, y_train, y_test, max_depth = 5, n_estimators = 100)
 
 random_forest(X_train, X_test, y_train, y_test)
+
+#grid_search.grid_search(model, param_grid, X_train, X_test, y_train, y_test, scoring = 'mean_absolute_error')
