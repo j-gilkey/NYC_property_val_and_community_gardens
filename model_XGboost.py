@@ -40,4 +40,16 @@ def grid_search_XG(X_train, X_test, y_train, y_test):
     grid_search.grid_search(xg_reg, param_grid, X_train, X_test, y_train, y_test, scoring = 'neg_mean_absolute_error')
 
 
-grid_search_XG(X_train, X_test, y_train, y_test)
+#grid_search_XG(X_train, X_test, y_train, y_test)
+
+
+
+'''
+Grid Search found the following optimal parameters:
+learning_rate: 0.2
+max_depth: 5
+min_child_weight: 1
+n_estimators: 200
+subsample: 0.9
+
+'''
