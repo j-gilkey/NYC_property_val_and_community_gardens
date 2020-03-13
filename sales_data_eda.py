@@ -132,5 +132,28 @@ def sales_eda_wrapper():
 
     return df_units
 
+def heat_corr(df):
+    fig = plt.figure()
+    #plt.clear()
+    plt.style.use('seaborn')
+    sns.set_palette('colorblind')
+    corr = df.corr()
+    sns.set(rc={'figure.figsize':(11.7,8.27)})
+    ax = sns.heatmap(corr, xticklabels=corr.columns, yticklabels=corr.columns, annot=True)
+    #ax.set_title(name)
+    bottom, top = ax.get_ylim()
+    ax.set_ylim(bottom + 0.5, top - 0.5)
+    plt.show()
+
+#prepped_df = pd.read_csv('data/prepped_for_model_unlogged_price.csv')
+
+columns_to_keep = ['numfloors', 'unitsres', 'sale_price', 'lotarea', 'histdist',
+       'landmark', 'builtfar', 'residfar', 'distance_to_garden', 'lat', 'lng',
+       'age_at_sale', 'years_since_mod']
+#prepped_df = prepped_df.loc[:, columns_to_keep]
+#print(prepped_df.columns)
+
+#heat_corr(prepped_df)
+#joint_plot('sale_price', 'distance_to_garden', prepped_df)
 
 #sales_eda_wrapper()

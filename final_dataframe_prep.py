@@ -47,12 +47,11 @@ def model_prep():
 
     columns_to_drop = ['yearalter1', 'yearalter2', 'yearbuilt','year', 'schooldist', 'landuse', 'lottype']
     df = df.drop(columns_to_drop, axis=1)
-    df = df[df['sale_price'] < 3000000]
+    #df = df[df['sale_price'] < 3000000]
 
-    df['log_price'] = df.apply(lambda row: np.log(row['sale_price']), axis =1)
-    df = df.drop('sale_price', axis=1)
+    #df['log_price'] = df.apply(lambda row: np.log(row['sale_price']), axis =1)
+    #df = df.drop('sale_price', axis=1)
 
-    print(df.head)
     return(df)
 
 
@@ -78,5 +77,6 @@ def heat_corr(df):
     plt.show()
 
 #df = model_prep()
+#print(df.head)
 #heat_corr(df)
-#df.to_csv('data/prepped_for_model_logged_price.csv', index=False)
+#df.to_csv('data/prepped_for_model_unlogged_price.csv', index=False)

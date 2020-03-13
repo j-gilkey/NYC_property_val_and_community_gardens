@@ -4,33 +4,50 @@ import pandas as pd
 import geojsonio
 import pprint
 import json
+import SQL_functions
 
 pd.set_option('display.max_columns', None)
 #pd.set_option('display.max_rows', None)
 
-overall_dict = {'type': 'FeatureCollection', 'features':[]}
+pluto_EV = gpd.read_file('data/geojson/pluto_EV.geojson')
+pred_df = pd.read_csv('data/all_with_predictions_unlogged.csv')
+pred_df = pred_df[['lat', 'lng', 'distance_to_garden', 'predicted']]
+pluto_data = SQL_functions.get_PLUTO()
+location_df = pd.DataFrame(pluto_data, columns = ['lot_id', 'block', 'lot', 'cd', 'zipcode', 'address', 'zonedist1', 'schooldist', 'splitzone', 'bldgclass', 'landuse', 'ownername', 'lotarea',
+                                'lottype', 'numfloors', 'unitsres', 'yearbuilt', 'yearalter1', 'yearalter2', 'histdist', 'landmark', 'builtfar', 'residfar', 'lat', 'lng'])
+location_df = location_df.set_index('lot_id')
+
+location_df = location_df[['block', 'lot','lat', 'lng']]
+location_df = location_df.astype({'block':'int64'})
+location_df = location_df.astype({'lot':'int64'})
+location_df = location_df.astype({'lat':'float'})
+location_df = location_df.astype({'lng':'float'})
+print(pred_df.dtypes)
+
+#location_df = int()
+#print(location_df.dtypes)
+
+print(location_df.columns)
+
+pluto_EV = pluto_EV.merge(location_df, how='left', on=['block', 'lot'])
+pluto_EV = pluto_EV.merge(pred_df, how='left', on=['lat', 'lng'])
+
+#merged_location = pd.merge(pluto_EV, location_df, how='left', on=['block', 'lot'])
+
+print(pluto_EV.shape)
+print(type(pluto_EV))
+
+pluto_EV = pluto_EV.dropna()
+
+pluto_EV = pluto_EV.to_json()
+geojsonio.display(pluto_EV)
+#pluto_EV = pluto_EV.dropna()
+#print(pluto_EV.shape)
 
 
-#pluto_EV = gpd.read_file('data/geojson/pluto_EV.geojson' )
+#pluto_EV_contents = open('data/geojson/pluto_EV.geojson').read()
 
-pluto_EV_contents = open('data/geojson/pluto_EV.geojson').read()
-pluto_LES_contents = open('data/geojson/pluto_EV.geojson').read()
-
-neighborhoods = [pluto_EV_contents, pluto_LES_contents]
-
-for neigh in neighborhoods:
-    pluto_dict_holder = json.loads(neigh)
-    features = pluto_dict_holder['features']
-    for feature in features:
-        overall_dict['features'].append(feature)
-
-print(overall_dict)
-print(pluto_dict_holder)
-final_json = json.dumps(overall_dict)
-print(final_json)
-print(pluto_EV_contents)
-
-geojsonio.display(pluto_EV_contents)
+#geojsonio.display(pluto_EV_contents)
 
 #pluto_EV_dict = json.loads(pluto_EV_contents)
 #pprint.pprint(pluto_EV_dict)
