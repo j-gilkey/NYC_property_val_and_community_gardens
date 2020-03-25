@@ -12,7 +12,7 @@ import final_dataframe_prep
 
 def full_prep():
 
-    #this function sets up the entire Manhattan PLUTO dataset to be passed into the model
+    #this function sets up the entire Manhattan PLUTO dataset to be passed into the model for predictions
     #to be used after the model is fit with sales data
 
     pluto_data = SQL_functions.get_PLUTO()
