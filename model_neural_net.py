@@ -15,21 +15,11 @@ import final_dataframe_prep
 
 pd.set_option('display.max_columns', None)
 
-#df = pd.read_csv('data/prepped_for_model.csv' )
-#df = pd.read_csv('data/prepped_for_model_under_3mill.csv' )
-df = pd.read_csv('data/prepped_for_model_logged_price.csv' )
-X  = df.drop('log_price', axis=1)
-Y  = df['log_price']
-X_train, X_test,y_train,y_test = final_dataframe_prep.get_train_test_split(df, 'log_price')
-
-print(X.shape)
-print(X.head)
-
 def baseline_model():
+    #this function instantiates the nueral network with 3 layers
     model = Sequential()
     model.add(Dense(55, kernel_initializer='normal', input_dim=35, activation='relu'))
     model.add(Dense(55, kernel_initializer='normal', activation='relu'))
-    #model.add(Dense(120, kernel_initializer='normal', activation='relu'))
     model.add(Dense(1, kernel_initializer='normal', activation='linear'))
     model.compile(loss='mean_squared_error', optimizer='adam', metrics=['mean_absolute_error'])
     print(model.summary())
@@ -37,23 +27,30 @@ def baseline_model():
 
 
 
-model_1 = baseline_model()
+def neural_apartment_pricing():
+    df = pd.read_csv('data/prepped_for_model_logged_price.csv' )
+    #read in CSV
+    X  = df.drop('log_price', axis=1)
+    #break out independents
+    Y  = df['log_price']
+    #dependent
+    X_train, X_test,y_train,y_test = final_dataframe_prep.get_train_test_split(df, 'log_price')
+    #then train, test, split
 
-checkpoint_name = 'Weights-{epoch:03d}--{val_loss:.5f}.hdf5'
-checkpoint = ModelCheckpoint(checkpoint_name, monitor='val_loss', verbose = 1, save_best_only = True, mode ='auto')
-callbacks_list = [checkpoint]
+    model_1 = baseline_model()
+    #instantiate the model
 
-#model_1.fit(X, Y, epochs=40, batch_size=32, validation_split = 0.2, callbacks=callbacks_list)
-model_1.fit(X, Y, epochs=20, batch_size=32, validation_split = 0.2)
+    checkpoint_name = 'Weights-{epoch:03d}--{val_loss:.5f}.hdf5'
+    checkpoint = ModelCheckpoint(checkpoint_name, monitor='val_loss', verbose = 1, save_best_only = True, mode ='auto')
+    callbacks_list = [checkpoint]
+    #set checkpoints and callbacks
 
-#preds = model_1.predict(X)
+    model_1.fit(X, Y, epochs=20, batch_size=32, validation_split = 0.2)
+    #fit the model
 
-#print(preds)
+    df['predicted_log'] = model_1.predict(X)
+    #create a new column comprised of predictions for each row
 
-df['predicted_log'] = model_1.predict(X)
+    #df.to_csv('data/data_with_predictions_1.csv', index=False)
 
-df.to_csv('data/data_with_predictions_1.csv', index=False)
-
-#print(df.head)
-
-#compile_model()
+#neural_apartment_pricing()

@@ -43,3 +43,14 @@ def grid_search(model, param_grid, X_train, X_test, y_train, y_test, scoring = '
     print(test_classified)
     #print results
     return grid_model
+
+
+def plot_feature_importances(model, X_train):
+    #plots feature importance for each dependent variable in the input model
+    n_features = X_train.shape[1]
+    plt.figure(figsize=(8,8))
+    plt.barh(range(n_features), model.feature_importances_, align='center')
+    plt.yticks(np.arange(n_features), X_train.columns.values)
+    plt.xlabel('Feature importance')
+    plt.ylabel('Feature')
+    plt.show()

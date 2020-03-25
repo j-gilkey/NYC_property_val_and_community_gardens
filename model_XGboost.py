@@ -10,8 +10,6 @@ import matplotlib.pyplot as plt
 
 pd.set_option('display.max_columns', None)
 
-#df = pd.read_csv('data/prepped_for_model.csv' )
-#df = pd.read_csv('data/prepped_for_model_under_3mill.csv' )
 df = pd.read_csv('data/prepped_for_model_unlogged_price.csv' )
 X  = df.drop('sale_price', axis=1)
 Y  = df['sale_price']
