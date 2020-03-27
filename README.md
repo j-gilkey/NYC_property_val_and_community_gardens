@@ -16,4 +16,4 @@ In order to study the affect of community garden proximity a distance_to_garden 
 * A KNN model was then instantiated using the lat, long of all Manhattan community gardens
 * Each relevant Manhattan lots was then fed into the model and return in the distance to the closed garden
 
-To see a thourough EDA of both datasets please refer to the presentation found [here] (https://docs.google.com/presentation/d/1L8Ux4gOaie1ffT31EYIwLck_G0lXFQNpwux9fBS5fQY/edit?usp=sharing). 
+To see a thourough EDA of both datasets please refer to the presentation found [here](https://docs.google.com/presentation/d/1L8Ux4gOaie1ffT31EYIwLck_G0lXFQNpwux9fBS5fQY/edit?usp=sharing). 
